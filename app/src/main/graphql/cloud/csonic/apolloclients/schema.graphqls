@@ -1,0 +1,62 @@
+schema {
+  query: Query
+}
+
+type Account {
+  id: String!
+  number: String!
+}
+
+type Address {
+  id: String!
+  line1: String!
+  line2: String! @deprecated(reason: "line2 is deprecated. Use fullAddress instead.")
+  fullAddress: String
+}
+
+enum CarrierType {
+  CLARO
+  MOVISTAR
+  ENTEL
+}
+
+type Customer {
+  id: String!
+  cic: String!
+  document: DocumentIdentifier!
+  name: String!
+  gender: String!
+  contact: Int!
+  mail: String
+  addresses: [Address!]!
+  phones: [Phone!]!
+}
+
+type DocumentIdentifier {
+  type: DocumentType!
+  number: String!
+}
+
+input DocumentInput {
+  type: DocumentType!
+  number: String!
+}
+
+enum DocumentType {
+  DNI
+  CE
+  PASSPORT
+}
+
+type Phone {
+  id: String!
+  carrier: CarrierType!
+  number: String!
+}
+
+type Query {
+  getAccounts: [Account!]!
+  getCustomers(nameFilter: String): [Customer!]!
+  getPhones(identifier: DocumentInput!): [Phone!]!
+  getAddress(identifier: DocumentInput!): [Address!]!
+}

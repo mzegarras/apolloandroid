@@ -1,0 +1,11 @@
+query CustomersData ($name: String!){
+    getCustomers(nameFilter: $name) {
+        cic
+        gender
+        name
+        addresses {
+            id
+            line1
+        }
+    }
+}

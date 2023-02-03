@@ -1,0 +1,9 @@
+
+query GetAccountsData {
+
+  getAccounts{
+    id
+    number
+
+  }
+}
