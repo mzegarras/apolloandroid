@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
-    private const val BASE_URL = "http://20.96.208.69:4000/graphql"
+    private const val BASE_URL = "http://52.251.68.150:4000/graphql"
 
     @Singleton
     @Provides

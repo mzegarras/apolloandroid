@@ -60,6 +60,7 @@ class SecondFragment : Fragment() {
 
     private fun setUpObservers() {
         mainViewModel.getAccounts().observe(viewLifecycleOwner,{accountList ->
+
             accountList?.let {
                 (activity as BaseActivity).hideLoading()
                 Log.d(SecondFragment::class.qualifiedName,"data----${it.size.toString()}");

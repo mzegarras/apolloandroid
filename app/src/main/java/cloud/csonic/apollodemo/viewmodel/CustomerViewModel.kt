@@ -13,24 +13,25 @@ import javax.inject.Inject
 @HiltViewModel
 class CustomerViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
-    private val customerLiveData = MutableLiveData<List<CustomerModel>?>()
+    private val customerLiveData = MutableLiveData<CustomerModel?>()
     fun getCustomer() = customerLiveData
 
     fun loadCustomers(name:String) {
         viewModelScope.launch {
-            val response = repository.getCustomers(name)
+            val response = repository.getCustomerByDocument(name)
 
             //val launch = response.data?.getAccounts
             //if (launch == null || response.hasErrors()) {
             if(!response.hasErrors()){
 
-                var customersList = listOf<CustomerModel>()
+                var data = response.data?.getCustomersByIdc
 
-                response.data?.getCustomers?.forEach {
-                    customersList = customersList + CustomerModel(it.name,it.cic);
+                data?.let {
+                    
+                    var customer = CustomerModel(it.cic,it.cic)
+                    customerLiveData.postValue(customer)
                 }
 
-                customerLiveData.postValue(customersList)
             }
         }
     }

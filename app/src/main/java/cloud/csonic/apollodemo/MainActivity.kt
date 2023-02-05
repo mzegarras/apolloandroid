@@ -1,6 +1,7 @@
 package cloud.csonic.apollodemo
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -40,10 +41,28 @@ class MainActivity : AppCompatActivity(),BaseActivity {
 
 
         binding.fab.setOnClickListener { view ->
+
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
 
-            showLoading()
+
+            var id = findNavController(R.id.nav_host_fragment_content_main).currentDestination?.id;
+
+
+
+            Log.d(MainActivity::class.qualifiedName,"${findNavController(R.id.nav_host_fragment_content_main).currentDestination?.id}---")
+
+            Log.d(MainActivity::class.qualifiedName,"${findNavController(R.id.nav_host_fragment_content_main).currentDestination?.id == R.id.SecondFragment}")
+            Log.d(MainActivity::class.qualifiedName,"${findNavController(R.id.nav_host_fragment_content_main).currentDestination?.id == R.id.FirstFragment}")
+
+
+            if(id ==R.id.FirstFragment){
+                navController.navigate(R.id.action_FirstFragment_to_SecondFragment)
+            }else{
+                //navController.navigate(R.id.action_SecondFragment_to_FirstFragment)
+                navController.popBackStack();
+            }
+
         }
 
 

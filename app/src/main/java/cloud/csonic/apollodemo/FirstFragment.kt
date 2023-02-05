@@ -49,7 +49,7 @@ class FirstFragment : Fragment() {
         binding.buttonFirst.setOnClickListener {
             //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
             (activity as BaseActivity).showLoading()
-            viewModel.loadCustomers("a")
+            viewModel.loadCustomers(_binding?.txtName?.text.toString())
         }
 
 
@@ -75,7 +75,8 @@ class FirstFragment : Fragment() {
 
                 (activity as BaseActivity).hideLoading()
                 //Log.d(FirstFragment::class.qualifiedName, "data----${it.size}");
-                _binding?.textviewFirst?.text = "${it.get(0).cic} ${it.get(0).lastName}"
+
+                _binding?.textviewFirst?.text = "${it.cic} ${it.lastName}"
             }
         }
 

@@ -1,11 +1,15 @@
-query CustomersData ($name: String!){
-    getCustomers(nameFilter: $name) {
+query getCustomersByIdc ($identifier: DocumentInput!) {
+    getCustomersByIdc(identifier: $identifier) {
         cic
         gender
         name
         addresses {
             id
             line1
+        },
+        accounts{
+            id
+            number
         }
     }
 }

@@ -21,10 +21,12 @@ enum CarrierType {
 }
 
 type Customer {
-  id: String!
+  id: ID
+  accounts: [Account]
   cic: String!
   document: DocumentIdentifier!
   name: String!
+  lastName: String!
   gender: String!
   contact: Int!
   mail: String
@@ -56,7 +58,8 @@ type Phone {
 
 type Query {
   getAccounts: [Account!]!
-  getCustomers(nameFilter: String): [Customer!]!
+  getCustomersByName(nameFilter: String!): Customer
+  getCustomersByIdc(identifier: DocumentInput!): Customer
   getPhones(identifier: DocumentInput!): [Phone!]!
   getAddress(identifier: DocumentInput!): [Address!]!
 }
