@@ -1,15 +1,24 @@
+# Write your query or mutation here
 query getCustomersByIdc ($identifier: DocumentInput!) {
     getCustomersByIdc(identifier: $identifier) {
         cic
+        document{
+            type
+            number
+        }
         gender
         name
+        lastName
         addresses {
             id
             line1
-        },
-        accounts{
+            line2
+        }
+        phones{
             id
             number
         }
+        mail
+        contact
     }
 }

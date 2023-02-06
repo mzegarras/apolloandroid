@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
-    private const val BASE_URL = "http://52.251.68.150:4000/graphql"
+    private const val BASE_URL = "http://20.96.99.144:4000/graphql"
 
     @Singleton
     @Provides
@@ -28,14 +28,14 @@ object ApiModule {
     @Provides
     fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
         OkHttpClient.Builder()
-            .addInterceptor { chain ->
+            /*.addInterceptor { chain ->
                 val original = chain.request()
                 val request = original.newBuilder()
-                    .addHeader("name", "android")
-                    .addHeader("version", BuildConfig.VERSION_NAME)
+                    .addHeader("apollographql-client-name", "android")
+                    .addHeader("apollographql-client-version", BuildConfig.VERSION_NAME)
                     .method(original.method, original.body)
                 chain.proceed(request.build())
-            }
+            }*/
             .addInterceptor(httpLoggingInterceptor)
             .build()
 
@@ -45,9 +45,10 @@ object ApiModule {
     fun getApolloClient(okHttpClient: OkHttpClient): ApolloClient {
         return ApolloClient.Builder()
             .serverUrl(BASE_URL)
+            .addHttpHeader("apollographql-client-name","android")
+            .addHttpHeader("apollographql-client-version",BuildConfig.VERSION_NAME)
             .okHttpClient(okHttpClient)
-            .build();
-
+            .build()
     }
 
     @Singleton

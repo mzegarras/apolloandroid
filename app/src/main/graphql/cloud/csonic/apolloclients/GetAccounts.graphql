@@ -1,9 +1,11 @@
-
-query GetAccountsData {
-
-  getAccounts{
-    id
-    number
-
+# Write your query or mutation here
+query getAccountsByIdc ($identifier: DocumentInput!) {
+  getCustomersByIdc(identifier: $identifier) {
+    accounts{
+      id
+      number
+      balance
+      currency
+    }
   }
 }

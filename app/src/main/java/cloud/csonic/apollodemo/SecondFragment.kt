@@ -1,17 +1,18 @@
 package cloud.csonic.apollodemo
 
+//import cloud.csonic.apollodemo.viewmodel.ProfileViewModel
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import cloud.csonic.apollodemo.adapter.AccountAdapter
 import cloud.csonic.apollodemo.databinding.FragmentSecondBinding
 import cloud.csonic.apollodemo.viewmodel.MainViewModel
-//import cloud.csonic.apollodemo.viewmodel.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class SecondFragment : Fragment() {
@@ -41,12 +42,14 @@ class SecondFragment : Fragment() {
         setUpUI()
         setUpObservers()
 
-        binding.buttonSecond.setOnClickListener {
+        /*binding.buttonSecond.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }
+        }*/
 
         (activity as BaseActivity).showLoading()
-        mainViewModel.loadAccounts();
+        mainViewModel.loadAccounts("12345678");
+
+        //binding.rvAccounts.adapter
     }
 
     override fun onDestroyView() {
@@ -59,12 +62,15 @@ class SecondFragment : Fragment() {
     }
 
     private fun setUpObservers() {
-        mainViewModel.getAccounts().observe(viewLifecycleOwner,{accountList ->
+        mainViewModel.getAccounts().observe(viewLifecycleOwner) { accountList ->
 
-            accountList?.let {
+            accountList.let {
                 (activity as BaseActivity).hideLoading()
-                Log.d(SecondFragment::class.qualifiedName,"data----${it.size.toString()}");
+
+                binding.rvAccounts.layoutManager = LinearLayoutManager(context)
+                binding.rvAccounts.adapter = it?.let { it1 -> AccountAdapter(it1) }
             }
-        })
+
+        }
     }
 }

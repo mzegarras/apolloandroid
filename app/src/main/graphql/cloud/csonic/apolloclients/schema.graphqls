@@ -5,6 +5,9 @@ schema {
 type Account {
   id: String!
   number: String!
+  currency: String!
+  balance: Float!
+  transactions: [Transaction!]!
 }
 
 type Address {
@@ -32,6 +35,7 @@ type Customer {
   mail: String
   addresses: [Address!]!
   phones: [Phone!]!
+  loans: [Loan!]!
 }
 
 type DocumentIdentifier {
@@ -50,6 +54,16 @@ enum DocumentType {
   PASSPORT
 }
 
+"""Prestamos del cliente"""
+type Loan {
+  """Nº de prestamo"""
+  loan_number: String!
+  """Monto prestado"""
+  amount_borrowed: Float!
+  """Número de Meses"""
+  term: Int
+}
+
 type Phone {
   id: String!
   carrier: CarrierType!
@@ -62,4 +76,14 @@ type Query {
   getCustomersByIdc(identifier: DocumentInput!): Customer
   getPhones(identifier: DocumentInput!): [Phone!]!
   getAddress(identifier: DocumentInput!): [Address!]!
+  getLoans: [Loan!]!
+}
+
+type Transaction {
+  id: String!
+  type: String!
+  description: String!
+  date: String!
+  currency: String!
+  amount: Float!
 }

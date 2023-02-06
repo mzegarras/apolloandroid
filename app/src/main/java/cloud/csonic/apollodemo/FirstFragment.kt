@@ -72,11 +72,21 @@ class FirstFragment : Fragment() {
     private fun setUpObservers() {
         viewModel.getCustomer().observe(viewLifecycleOwner) { customerList ->
             customerList?.let {
-
                 (activity as BaseActivity).hideLoading()
-                //Log.d(FirstFragment::class.qualifiedName, "data----${it.size}");
 
-                _binding?.textviewFirst?.text = "${it.cic} ${it.lastName}"
+                _binding?.textviewFirst?.text = context?.getString(R.string.cic_title, "${it.cic}");
+
+                _binding?.textviewDocument?.text = context?.getString(R.string.document_title,
+                    "${it.document.type}",
+                    "${it.document.number}");
+
+                _binding?.textviewName?.text = context?.getString(R.string.document_name,
+                    "${it.name}",
+                    "${it.lastName}");
+                _binding?.textviewMail?.text = context?.getString(R.string.document_mail, "${it.mail}");
+                _binding?.textviewGender?.text = context?.getString(R.string.document_genero, "${it.gender}");
+                _binding?.textviewAddress?.text = context?.getString(R.string.document_address, "${it.addresses?.size}");
+                _binding?.textviewPhones?.text = context?.getString(R.string.document_phones, "${it.phones?.size}");
             }
         }
 

@@ -1,6 +1,7 @@
 package cloud.csonic.apollodemo.repository
 
-import cloud.csonic.apolloclients.GetAccountsDataQuery
+
+import cloud.csonic.apolloclients.GetAccountsByIdcQuery
 import cloud.csonic.apolloclients.GetCustomersByIdcQuery
 import cloud.csonic.apolloclients.type.DocumentInput
 import cloud.csonic.apolloclients.type.DocumentType
@@ -10,9 +11,12 @@ import com.apollographql.apollo3.api.ApolloResponse
 
 class Repository(private val apolloClient: ApolloClient) {
 
-    suspend fun getAccounts(): ApolloResponse<GetAccountsDataQuery.Data> {
+    suspend fun getAccounts(numberDoc:String): ApolloResponse<GetAccountsByIdcQuery.Data> {
 
-        return apolloClient.query(GetAccountsDataQuery())
+
+        var document = DocumentInput(DocumentType.DNI,numberDoc)
+
+        return apolloClient.query(GetAccountsByIdcQuery(document))
             .execute();
 
     }
